@@ -4,6 +4,7 @@ window.down = false;
 window.left = false;
 window.right = false;
 window.start = false;
+window.collectibleArr = [];
 
 function addEventListenerFunction()
 {
@@ -79,14 +80,16 @@ function characterAnimFrame()
 function characterMovementSteps()
 {
 	var charakter = document.getElementById("charakter");
-	var collectibles = document.getElementsByClassName("collectible");
+	//var collectibles = document.getElementsByClassName("collectible");
+	var collectibles = document.querySelectorAll(".collectible,.collectibleEnd");
 
-	var speed = 5;
+	var speed = 2;
 	if(window.left)
 	{
 		for (var i = collectibles.length - 1; i >= 0; i--)
 		{
-			collectibles[i].style.left = parseInt(collectibles[i].style.left) - speed + "px";
+			var effectiveSpeed = speed + collectibles[i].zAxe;
+			collectibles[i].style.left = parseInt(collectibles[i].style.left) - effectiveSpeed + "px";
 		}
 		//charakter.style.left = parseInt(charakter.style.left) - speed + "px";
 	}
@@ -94,7 +97,8 @@ function characterMovementSteps()
 	{
 		for (var i = collectibles.length - 1; i >= 0; i--)
 		{
-			collectibles[i].style.top = parseInt(collectibles[i].style.top) - speed + "px";
+			var effectiveSpeed = speed + collectibles[i].zAxe;
+			collectibles[i].style.top = parseInt(collectibles[i].style.top) - effectiveSpeed + "px";
 		}
 		//charakter.style.top = parseInt(charakter.style.top) - speed + "px";
 	}
@@ -102,7 +106,8 @@ function characterMovementSteps()
 	{
 		for (var i = collectibles.length - 1; i >= 0; i--)
 		{
-			collectibles[i].style.left = parseInt(collectibles[i].style.left) + speed + "px";
+			var effectiveSpeed = speed + collectibles[i].zAxe;
+			collectibles[i].style.left = parseInt(collectibles[i].style.left) + effectiveSpeed + "px";
 		}
 		//charakter.style.left = parseInt(charakter.style.left) + speed + "px";
 	}
@@ -110,7 +115,8 @@ function characterMovementSteps()
 	{
 		for (var i = collectibles.length - 1; i >= 0; i--)
 		{
-			collectibles[i].style.top = parseInt(collectibles[i].style.top) + speed + "px";
+			var effectiveSpeed = speed + collectibles[i].zAxe;
+			collectibles[i].style.top = parseInt(collectibles[i].style.top) + effectiveSpeed + "px";
 		}
 		//charakter.style.top = parseInt(charakter.style.top) + speed + "px";
 	}
@@ -135,9 +141,37 @@ function collectibleLifetime()
 	collectibleImgElement.style.top = xPos + "px";
 	collectibleImgElement.style.left = yPos + "px";
 	collectibleImgElement.className += "collectible";
+	collectibleImgElement.zAxe = 1;
 	document.body.appendChild(collectibleImgElement);
-	console.log("drawn");
+	window.collectibleArr.push(collectibleImgElement);
+
+	//console.log("drawn");
+	setTimeout(function () {collectibleImgElement.className = "collectibleEnd";}, 10);
+	setTimeout(function ()
+	{
+		collectibleImgElement.zAxe = collectibleImgElement.zAxe + 2;
+	}, 1000);
+	setTimeout(function ()
+	{
+		collectibleImgElement.zAxe = collectibleImgElement.zAxe + 2;
+	}, 2000);
+	setTimeout(function ()
+	{
+		collectibleImgElement.zAxe = collectibleImgElement.zAxe + 2;
+	}, 3000);
+	setTimeout(function ()
+	{
+		collectibleImgElement.zAxe = collectibleImgElement.zAxe + 2;
+	}, 4000);
+
+	setTimeout(function ()
+	{
+		//console.log(collectibleImgElement.offsetWidth);
+		window.collectibleArr.pop(collectibleImgElement);
+		collectibleImgElement.remove();
+	}, 5000);
 	setTimeout(collectibleLifetime, 5000);
+	//collectibleImgElement.remove();
 }
 
 function gameloop()

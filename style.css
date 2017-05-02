@@ -15,4 +15,18 @@
 .collectible
 {
 	position: absolute;
+	width: 100px;
+}
+
+.collectibleEnd
+{
+	position: absolute;
+	transition: transform 5s ease-in-out;
+	transform:scale(3,3);
+	/*
+	-webkit-transition-property: width;
+	-webkit-transition-duration: 5s;
+	-webkit-transition-timing-function: ease-in-out;
+	width: 300px;
+	*/
 }
