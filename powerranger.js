@@ -5,6 +5,7 @@ window.left = false;
 window.right = false;
 window.start = false;
 window.collectibleArr = [];
+window.charArr = ["gfx/wingMan1Sync.png", "gfx/wingMan2Sync.png", "gfx/wingMan3Sync.png", "gfx/wingMan4Sync.png", "gfx/wingMan5Sync.png", "gfx/wingMan2Sync.png"];
 
 function addEventListenerFunction()
 {
@@ -66,7 +67,7 @@ function keyReleasedCodeToFunction(evt)
 
 function characterAnimFrame()
 {
-	charSprites = ["gfx/wingMan1Sync.png", "gfx/wingMan2Sync.png", "gfx/wingMan3Sync.png", "gfx/wingMan4Sync.png", "gfx/wingMan5Sync.png", "gfx/wingMan2Sync.png"];
+	charSprites = window.charArr;
 	window.charAnimLoopCount ++;
 	if(window.charAnimLoopCount > 5)
 	{
@@ -89,7 +90,7 @@ function characterMovementSteps()
 		for (var i = collectibles.length - 1; i >= 0; i--)
 		{
 			var effectiveSpeed = speed + collectibles[i].zAxe;
-			collectibles[i].style.left = parseInt(collectibles[i].style.left) - effectiveSpeed + "px";
+			collectibles[i].style.left = parseInt(collectibles[i].style.left) + effectiveSpeed + "px";
 		}
 		//charakter.style.left = parseInt(charakter.style.left) - speed + "px";
 	}
@@ -98,7 +99,7 @@ function characterMovementSteps()
 		for (var i = collectibles.length - 1; i >= 0; i--)
 		{
 			var effectiveSpeed = speed + collectibles[i].zAxe;
-			collectibles[i].style.top = parseInt(collectibles[i].style.top) - effectiveSpeed + "px";
+			collectibles[i].style.top = parseInt(collectibles[i].style.top) + effectiveSpeed + "px";
 		}
 		//charakter.style.top = parseInt(charakter.style.top) - speed + "px";
 	}
@@ -107,7 +108,7 @@ function characterMovementSteps()
 		for (var i = collectibles.length - 1; i >= 0; i--)
 		{
 			var effectiveSpeed = speed + collectibles[i].zAxe;
-			collectibles[i].style.left = parseInt(collectibles[i].style.left) + effectiveSpeed + "px";
+			collectibles[i].style.left = parseInt(collectibles[i].style.left) - effectiveSpeed + "px";
 		}
 		//charakter.style.left = parseInt(charakter.style.left) + speed + "px";
 	}
@@ -116,7 +117,7 @@ function characterMovementSteps()
 		for (var i = collectibles.length - 1; i >= 0; i--)
 		{
 			var effectiveSpeed = speed + collectibles[i].zAxe;
-			collectibles[i].style.top = parseInt(collectibles[i].style.top) + effectiveSpeed + "px";
+			collectibles[i].style.top = parseInt(collectibles[i].style.top) - effectiveSpeed + "px";
 		}
 		//charakter.style.top = parseInt(charakter.style.top) + speed + "px";
 	}
@@ -146,7 +147,7 @@ function collectibleLifetime()
 	window.collectibleArr.push(collectibleImgElement);
 
 	//console.log("drawn");
-	setTimeout(function () {collectibleImgElement.className = "collectibleEnd";}, 10);
+	setTimeout(function () {collectibleImgElement.className = "collectibleEnd";}, 50);
 	setTimeout(function ()
 	{
 		collectibleImgElement.zAxe = collectibleImgElement.zAxe + 2;
@@ -170,7 +171,7 @@ function collectibleLifetime()
 		window.collectibleArr.pop(collectibleImgElement);
 		collectibleImgElement.remove();
 	}, 5000);
-	setTimeout(collectibleLifetime, 5000);
+	setTimeout(collectibleLifetime, 1000);
 	//collectibleImgElement.remove();
 }
 
