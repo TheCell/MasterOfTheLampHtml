@@ -10,7 +10,7 @@
 {
 	width: 500px;
 	height: 500px;
-	z-index: -100;
+	/*z-index: 0;*/
 	/*background-color: rgb(100, 255, 40);*/
 }
 
@@ -18,20 +18,27 @@
 {
 	position: absolute;
 	width: 100px;
-	z-index: -10;
+	/*z-index: 1;*/
 }
 
 .collectibleEnd
 {
 	position: absolute;
-	z-index: -10;
-	opacity: 0.5;
-	transition: transform 5s ease-in-out;
-	transform:scale(3,3);
+	/*opacity: 0.5;*/
+	/*transition: transform 6s ease-in-out;*/
+	animation: scale 5s;
+	animation-timing-function: linear;
 	/*
 	-webkit-transition-property: width;
 	-webkit-transition-duration: 5s;
 	-webkit-transition-timing-function: ease-in-out;
 	width: 300px;
 	*/
+}
+
+@keyframes scale
+{
+	0% {transform: scale(1,1);}
+	80% {transform: scale(3,3);}
+	100% {transform: scale(7,7);}
 }
