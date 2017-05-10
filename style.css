@@ -17,7 +17,7 @@
 .collectible
 {
 	position: absolute;
-	width: 100px;
+	width: 50px;
 	/*z-index: 1;*/
 }
 
@@ -38,7 +38,9 @@
 
 @keyframes scale
 {
-	0% {transform: scale(1,1);}
-	80% {transform: scale(3,3);}
-	100% {transform: scale(7,7);}
+	0% {transform: scale(0.1,0.1);}
+	70% {transform: scale(0.8,0.8);}
+	80% {transform: scale(1,1);}
+	90% {transform: scale(10,10);}
+	100% {transform: scale(20,20);}
 }

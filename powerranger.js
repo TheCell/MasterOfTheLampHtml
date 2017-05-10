@@ -4,11 +4,25 @@ window.down = false;
 window.left = false;
 window.right = false;
 window.start = false;
+window.lastImgFrame = 1;
 window.lastCollectiblePosTop = 350;
 window.lastCollectiblePosLeft = 350;
 window.collectibleArr = [];
+window.collectibleArrForDel = [];
 window.score = 0;
-window.charArr = ["gfx/wingMan1Sync.png", "gfx/wingMan2Sync.png", "gfx/wingMan3Sync.png", "gfx/wingMan4Sync.png", "gfx/wingMan5Sync.png", "gfx/wingMan2Sync.png"];
+window.charArr = [
+	"gfx/wingMan1Sync.png",
+	"gfx/wingMan1Sync.png",
+	"gfx/wingMan2Sync.png",
+	"gfx/wingMan2Sync.png",
+	"gfx/wingMan3Sync.png",
+	"gfx/wingMan3Sync.png",
+	"gfx/wingMan4Sync.png",
+	"gfx/wingMan4Sync.png",
+	"gfx/wingMan5Sync.png",
+	"gfx/wingMan5Sync.png",
+	"gfx/wingMan2Sync.png",
+	"gfx/wingMan2Sync.png"];
 
 function addEventListenerFunction()
 {
@@ -42,7 +56,6 @@ function keyPressedCodeToFunction(evt)
 	}
 }
 
-
 function keyReleasedCodeToFunction(evt)
 {
 	// arrow left
@@ -67,7 +80,6 @@ function keyReleasedCodeToFunction(evt)
 	}
 }
 
-
 function characterAnimFrame()
 {
 	charSprites = window.charArr;
@@ -91,7 +103,7 @@ function characterMovementSteps()
 	{
 		for (var i = collectibles.length - 1; i >= 0; i--)
 		{
-			var effectiveSpeed = speed + collectibles[i].zAxe;
+			var effectiveSpeed = (speed + collectibles[i].zAxe)/2;
 			collectibles[i].style.left = parseInt(collectibles[i].style.left) + effectiveSpeed + "px";
 		}
 		//charakter.style.left = parseInt(charakter.style.left) - speed + "px";
@@ -100,7 +112,7 @@ function characterMovementSteps()
 	{
 		for (var i = collectibles.length - 1; i >= 0; i--)
 		{
-			var effectiveSpeed = speed + collectibles[i].zAxe;
+			var effectiveSpeed = (speed + collectibles[i].zAxe)/2;
 			collectibles[i].style.top = parseInt(collectibles[i].style.top) + effectiveSpeed + "px";
 		}
 		//charakter.style.top = parseInt(charakter.style.top) - speed + "px";
@@ -109,7 +121,7 @@ function characterMovementSteps()
 	{
 		for (var i = collectibles.length - 1; i >= 0; i--)
 		{
-			var effectiveSpeed = speed + collectibles[i].zAxe;
+			var effectiveSpeed = (speed + collectibles[i].zAxe)/2;
 			collectibles[i].style.left = parseInt(collectibles[i].style.left) - effectiveSpeed + "px";
 		}
 		//charakter.style.left = parseInt(charakter.style.left) + speed + "px";
@@ -118,7 +130,7 @@ function characterMovementSteps()
 	{
 		for (var i = collectibles.length - 1; i >= 0; i--)
 		{
-			var effectiveSpeed = speed + collectibles[i].zAxe;
+			var effectiveSpeed = (speed + collectibles[i].zAxe)/2;
 			collectibles[i].style.top = parseInt(collectibles[i].style.top) - effectiveSpeed + "px";
 		}
 		//charakter.style.top = parseInt(charakter.style.top) + speed + "px";
@@ -138,15 +150,22 @@ function collectibleLifetime()
 {
 	var yPos = window.lastCollectiblePosTop;
 	var xPos = window.lastCollectiblePosLeft;
+	window.lastImgFrame++;
+	if (window.lastImgFrame > 6)
+	{
+		window.lastImgFrame = 1;
+	}
 	changeSpawnPos();
 
 	var collectibleImgElement = document.createElement("img");
-	collectibleImgElement.src = "gfx/bronze_1.png";
+	//collectibleImgElement.src = "gfx/bronze_1.png";
+	collectibleImgElement.src = "gfx/glazing_" + window.lastImgFrame + ".png";
 	collectibleImgElement.style.top = xPos + "px";
 	collectibleImgElement.style.left = yPos + "px";
 	collectibleImgElement.style.zIndex = 0;
 	collectibleImgElement.className += "collectible";
 	collectibleImgElement.zAxe = 1;
+	collectibleImgElement.canDie = false;
 	document.getElementById("collectibleContainer").appendChild(collectibleImgElement);
 	window.collectibleArr.push(collectibleImgElement);
 
@@ -177,7 +196,6 @@ function collectibleLifetime()
 	{
 		//console.log(collectibleImgElement.offsetWidth);
 		window.collectibleArr.pop(collectibleImgElement);
-		collectibleImgElement.remove();
 
 		/*
 		console.log("left: " + parseInt(collectibleImgElement.style.left));
@@ -185,6 +203,7 @@ function collectibleLifetime()
 		console.log("width: " + collectibleImgElement.width * 2);
 		console.log("height: " + collectibleImgElement.height * 2);
 		*/
+
 		let halfCollWidth = collectibleImgElement.width;
 		let halfCollHeight = collectibleImgElement.height;
 		let collLeft = parseInt(collectibleImgElement.style.left);
@@ -195,7 +214,7 @@ function collectibleLifetime()
 		let charLeft = 400;
 		let charTop = 400;
 
-		let charMidX = charLeft + (charHeight / 2);
+		let charMidX = charLeft + (charWidth / 2);
 		let charMidY = charTop + (charHeight / 2);
 		let collMidX = collTop + halfCollHeight;
 		let collMidY = collLeft + halfCollWidth;
@@ -203,13 +222,22 @@ function collectibleLifetime()
 		let xBetween = (Math.max(collMidX, charMidX) - Math.min(collMidX, charMidX));
 		let yBetween = (Math.max(collMidY, charMidY) - Math.min(collMidY, charMidY));
 
-		console.log( yBetween = Math.sqrt(Math.abs(xBetween * xBetween) + Math.abs(yBetween * yBetween)));
-		if(Math.sqrt(Math.abs(xBetween * xBetween) + Math.abs(yBetween * yBetween)) <= 150)
+		//console.log(Math.sqrt(xBetween * xBetween + yBetween * yBetween));
+		//if(Math.sqrt(xBetween * xBetween + yBetween * yBetween) <= 500)
+		//if(Math.sqrt(xBetween * xBetween + yBetween * yBetween) <= 160)
+		if(Math.sqrt(xBetween * xBetween + yBetween * yBetween) <= 180)
 		{
 			window.score = window.score + 1;
+			console.log("SCORE");
 		}
-	}, 4900);
+
+		//collectibleImgElement.remove();
+		//collectibleImgElement.canDie = true;
+		window.collectibleArrForDel.push(collectibleImgElement);
+	}, 4200);
+
 	setTimeout(collectibleLifetime, 1000);
+	setTimeout(killcollectible, 1000);
 	//collectibleImgElement.remove();
 }
 
@@ -221,9 +249,9 @@ function changeSpawnPos()
 		height: window.innerHeight || document.body.clientHeight
 	}
 
-	let maxStep = 900;
-	let xStep = Math.random() * 100 % maxStep;
-	let yStep = Math.random() * 100 % maxStep;
+	let maxStep = 60;
+	let xStep = Math.random() * 1000 % maxStep;
+	let yStep = Math.random() * 1000 % maxStep;
 	let xDirection, yDirection;
 	if(Math.random()*10 > 5)
 	{
@@ -275,6 +303,14 @@ function updateScore()
 	document.querySelectorAll("#scoreboard span")[0].innerHTML = window.score;
 }
 
+function killcollectible()
+{
+	for (var i = window.collectibleArrForDel.length - 1; i >= 0; i--)
+	{
+		window.collectibleArrForDel[i].remove();
+	}
+}
+
 function gameloop()
 {
 	characterAnimFrame();
@@ -283,4 +319,4 @@ function gameloop()
 	startGame();
 }
 
-setInterval(gameloop, 60);
+setInterval(gameloop, 30);
