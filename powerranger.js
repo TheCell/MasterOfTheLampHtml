@@ -4,6 +4,9 @@ window.down = false;
 window.left = false;
 window.right = false;
 window.start = false;
+window.playMusic = true;
+window.playSound = true;
+window.audioObject;
 window.lastImgFrame = 1;
 window.lastCollectiblePosTop = 350;
 window.lastCollectiblePosLeft = 350;
@@ -143,6 +146,13 @@ function startGame()
 	{
 		collectibleLifetime();
 		window.start = true;
+		if(window.playMusic)
+		{
+			window.audioObject = new Audio('sfx/Wepa.mp3');
+			window.audioObject.volume = 0.1;
+			window.audioObject.loop = true;
+			window.audioObject.play();
+		}
 	}
 }
 
@@ -204,8 +214,8 @@ function collectibleLifetime()
 		console.log("height: " + collectibleImgElement.height * 2);
 		*/
 
-		let halfCollWidth = collectibleImgElement.width;
-		let halfCollHeight = collectibleImgElement.height;
+		let halfCollWidth = collectibleImgElement.width / 2;
+		let halfCollHeight = collectibleImgElement.height / 2;
 		let collLeft = parseInt(collectibleImgElement.style.left);
 		let collTop = parseInt(collectibleImgElement.style.top);
 
@@ -216,19 +226,39 @@ function collectibleLifetime()
 
 		let charMidX = charLeft + (charWidth / 2);
 		let charMidY = charTop + (charHeight / 2);
-		let collMidX = collTop + halfCollHeight;
-		let collMidY = collLeft + halfCollWidth;
+		let collMidY = collTop + halfCollHeight;
+		let collMidX = collLeft + halfCollWidth;
 
-		let xBetween = (Math.max(collMidX, charMidX) - Math.min(collMidX, charMidX));
-		let yBetween = (Math.max(collMidY, charMidY) - Math.min(collMidY, charMidY));
+		//let xBetween = (Math.max(collMidX, charMidX) - Math.min(collMidX, charMidX));
+		//let yBetween = (Math.max(collMidY, charMidY) - Math.min(collMidY, charMidY));
+		let xBetween = Math.abs(collMidX - charMidX);
+		let yBetween = Math.abs(collMidY - charMidY);
 
-		//console.log(Math.sqrt(xBetween * xBetween + yBetween * yBetween));
+		console.log(Math.sqrt(xBetween * xBetween + yBetween * yBetween));
+
+		// debug
+		if(false)
+		{
+			var marker = document.createElement("img");
+			marker.src = "gfx/glazing_" + window.lastImgFrame + ".png";
+			marker.style.top = collMidY + "px";
+			marker.style.left = collMidX + "px";
+			marker.className = "marker";
+			document.getElementById("collectibleContainer").appendChild(marker);
+		}
+
 		//if(Math.sqrt(xBetween * xBetween + yBetween * yBetween) <= 500)
 		//if(Math.sqrt(xBetween * xBetween + yBetween * yBetween) <= 160)
 		if(Math.sqrt(xBetween * xBetween + yBetween * yBetween) <= 180)
 		{
 			window.score = window.score + 1;
 			console.log("SCORE");
+			if(window.playSound)
+			{
+				var audiofx = new Audio("sfx/194081__potentjello__woosh-noise-1.wav");
+				audiofx.volume = 1;
+				audiofx.play();
+			}
 		}
 
 		//collectibleImgElement.remove();
@@ -317,6 +347,14 @@ function gameloop()
 	characterMovementSteps();
 	updateScore();
 	startGame();
+	if(window.playMusic)
+	{
+		window.audioObject.play();
+	}
+	else
+	{
+		window.audioObject.pause();
+	}
 }
 
 setInterval(gameloop, 30);

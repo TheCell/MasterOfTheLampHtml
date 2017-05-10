@@ -1,3 +1,14 @@
+body
+{
+	overflow: hidden;
+}
+
+.marker
+{
+	width: 10px;
+	height: 10px;
+	position: absolute;
+}
 #charakter
 {
 	position: absolute;
@@ -43,4 +54,9 @@
 	80% {transform: scale(1,1);}
 	90% {transform: scale(10,10);}
 	100% {transform: scale(20,20);}
+}
+
+.credits
+{
+	margin-top: 100px;
 }
