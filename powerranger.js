@@ -146,11 +146,22 @@ function startGame()
 	{
 		collectibleLifetime();
 		window.start = true;
+		window.audioObject = new Audio('sfx/Wepa.mp3');
+		window.audioObject.volume = 0.1;
+		window.audioObject.loop = true;
+
+		if(JSON.parse(localStorage.getItem("playsound")))
+		{
+			window.playMusic = true;
+		}
+		else
+		{
+			localStorage.setItem("playsound", false);
+			window.playMusic = false;
+		}
+
 		if(window.playMusic)
 		{
-			window.audioObject = new Audio('sfx/Wepa.mp3');
-			window.audioObject.volume = 0.1;
-			window.audioObject.loop = true;
 			window.audioObject.play();
 		}
 	}
@@ -221,8 +232,8 @@ function collectibleLifetime()
 
 		let charHeight = 50;
 		let charWidth = 73;
-		let charLeft = 400;
-		let charTop = 400;
+		let charLeft = 300;
+		let charTop = 300;
 
 		let charMidX = charLeft + (charWidth / 2);
 		let charMidY = charTop + (charHeight / 2);
@@ -234,7 +245,7 @@ function collectibleLifetime()
 		let xBetween = Math.abs(collMidX - charMidX);
 		let yBetween = Math.abs(collMidY - charMidY);
 
-		console.log(Math.sqrt(xBetween * xBetween + yBetween * yBetween));
+		//console.log(Math.sqrt(xBetween * xBetween + yBetween * yBetween));
 
 		// debug
 		if(false)
@@ -252,13 +263,17 @@ function collectibleLifetime()
 		if(Math.sqrt(xBetween * xBetween + yBetween * yBetween) <= 180)
 		{
 			window.score = window.score + 1;
-			console.log("SCORE");
-			if(window.playSound)
+			//console.log("SCORE");
+			if(window.playMusics)
 			{
 				var audiofx = new Audio("sfx/194081__potentjello__woosh-noise-1.wav");
 				audiofx.volume = 1;
 				audiofx.play();
 			}
+		}
+		else
+		{
+
 		}
 
 		//collectibleImgElement.remove();
@@ -279,7 +294,7 @@ function changeSpawnPos()
 		height: window.innerHeight || document.body.clientHeight
 	}
 
-	let maxStep = 60;
+	let maxStep = 100;
 	let xStep = Math.random() * 1000 % maxStep;
 	let yStep = Math.random() * 1000 % maxStep;
 	let xDirection, yDirection;
@@ -347,12 +362,15 @@ function gameloop()
 	characterMovementSteps();
 	updateScore();
 	startGame();
+
 	if(window.playMusic)
 	{
+		localStorage.setItem("playsound", true);
 		window.audioObject.play();
 	}
 	else
 	{
+		localStorage.setItem("playsound", false);
 		window.audioObject.pause();
 	}
 }
