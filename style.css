@@ -3,6 +3,11 @@ body
 	overflow: hidden;
 }
 
+#scoreboard
+{
+	position: absolute;
+	z-index: 10;
+}
 .marker
 {
 	width: 10px;
@@ -58,5 +63,7 @@ body
 
 .credits
 {
+	position: absolute;
+	z-index: 10;
 	margin-top: 100px;
 }
