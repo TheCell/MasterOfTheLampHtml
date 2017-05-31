@@ -4,6 +4,7 @@
 	<title>
 		Loose
 	</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 	<a href="index.html">restart</a>
@@ -25,10 +26,24 @@
 				for (var i = 0; i < out.highscores.length; i++)
 				{
 					let newRow = document.createElement("tr");
+					let medaille = document.createElement("td");
 					let name = document.createElement("td");
 					let score = document.createElement("td");
+					if (i == 0)
+					{
+						medaille.innerHTML = '<img class="medaille" src="gfx/gold_1.png" />';
+					}
+					else if (i == 1)
+					{
+						medaille.innerHTML = '<img class="medaille" src="gfx/silver_1.png" />';
+					}
+					else if (i == 2)
+					{
+						medaille.innerHTML = '<img class="medaille" src="gfx/bronze_1.png" />';
+					}
 					name.innerHTML = out.highscores[i].name.toUpperCase();
 					score.innerHTML = out.highscores[i].score;
+					newRow.appendChild(medaille);
 					newRow.appendChild(name);
 					newRow.appendChild(score);
 					newTable.appendChild(newRow);

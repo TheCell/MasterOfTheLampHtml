@@ -6,6 +6,8 @@ window.right = false;
 window.start = false;
 window.playMusic = true;
 window.audioObject;
+window.audioMissObject;
+window.audioHitObject;
 window.lastImgFrame = 1;
 window.lastCollectiblePosTop = 350;
 window.lastCollectiblePosLeft = 350;
@@ -146,7 +148,13 @@ function startGame()
 		window.start = true;
 		collectibleLifetime();
 		window.audioObject = new Audio('sfx/Wepa.mp3');
+		window.audioMissObject = new Audio('sfx/lose8.ogg');
+		window.audioHitObject = new Audio('sfx/pickup4.ogg');
 		window.audioObject.volume = 0.1;
+		window.audioMissObject.volume = 0.05;
+		window.audioHitObject.volume = 0.05;
+		window.audioMissObject.loop = false;
+		window.audioHitObject.loop = false;
 		window.audioObject.loop = true;
 
 		if(JSON.parse(localStorage.getItem("playsound")))
@@ -265,15 +273,19 @@ function collectibleLifetime()
 			{
 				window.score = window.score + 1;
 				//console.log("SCORE");
-				if(window.playMusics)
+				if(window.playMusic)
 				{
-					var audiofx = new Audio("sfx/194081__potentjello__woosh-noise-1.wav");
-					audiofx.volume = 1;
-					audiofx.play();
+					window.audioHitObject.play();
+					console.log("playMusic");
 				}
 			}
 			else
 			{
+				if(window.playMusic)
+				{
+					window.audioMissObject.play();
+				}
+
 				lostGame();
 			}
 

@@ -1,5 +1,13 @@
+@font-face
+{
+	font-family: "kenney";
+	src: url("gfx/KenVectorFuture.ttf") format('truetype');
+	/*src: url("gfx/KenPixelBlocks.ttf") format('truetype');*/
+}
+
 body
 {
+	font-family: "kenney";
 	overflow: hidden;
 }
 
@@ -66,4 +74,10 @@ body
 	position: absolute;
 	z-index: 10;
 	margin-top: 100px;
+}
+
+/* lost.html */
+.medaille
+{
+	max-height: 40px;
 }
