@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		Loose
+	</title>
+</head>
+<body>
+	<a href="index.html">restart</a>
+
+	<div id="scorelist">
+	</div>
+
+	<script type="text/javascript">
+		displayScore();
+
+		function displayScore()
+		{
+			let url = 'http://dev.thecell.eu/masterofthelamp/getandsetlist.php?get=1&gameid=1';
+			let newTable = document.createElement("TABLE");
+
+			fetch(url)
+			.then(res => res.json())
+			.then((out) => {
+				for (var i = 0; i < out.highscores.length; i++)
+				{
+					let newRow = document.createElement("tr");
+					let name = document.createElement("td");
+					let score = document.createElement("td");
+					name.innerHTML = out.highscores[i].name.toUpperCase();
+					score.innerHTML = out.highscores[i].score;
+					newRow.appendChild(name);
+					newRow.appendChild(score);
+					newTable.appendChild(newRow);
+				}
+			}).catch(err => console.error(err));
+
+			document.getElementById("scorelist").appendChild(newTable);
+		}
+	</script>
+</body>
+</html>

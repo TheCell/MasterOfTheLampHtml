@@ -2,31 +2,35 @@
 <html>
 <head>
 	<title>
-		Javascript 1
+		intro
 	</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<script src="powerranger.js"></script>
 </head>
 <body>
-	<div id="scoreboard">
-		Your score: <span>0</span>
-	</div>
-	<div id="playfield" style="top: 0px; left: 0px;">
-	<!--
-		<img class="collectible" src="gfx/bronze_1.png" style="top: 100px; left: 100px;">
-		<img class="collectible" src="gfx/bronze_1.png" style="top: 400px; left: 400px;">
-	-->
-		<div id="charakter" style="top: 300px; left: 300px;">
-			<img id="charakterGfx" src="gfx/wingMan1Sync.png" height="50" style="z-index: 100;">
-		</div>
-		<div id="collectibleContainer" style="z-index: 10;"></div>
-	</div>
-	<div class="credits">
-	<button onclick="window.playMusic = !window.playMusic;">Toggle Audio</button>
-		Credits:<br>
-		Music: "Wepa" Kevin MacLeod (incompetech.com)
+	<script type="text/javascript">
+		function startgame()
+		{
+			let name = document.nameForm["name"].value;
+			name.substring(0,3).toUpperCase();
+
+			localStorage.setItem("playerName", name);
+			window.location = "game.html";
+			return false;
+		}
+	</script>
+
+	<div>
+		<form name="nameForm" onsubmit="return startgame()">
+			<input type="text" name="name" maxlength="3" style="text-transform:uppercase" />
+
+			<input type="submit" name="start">
+		</form>
+
+		<div class="credits">
+			Credits:<br>
+			Music: "Wepa" Kevin MacLeod (incompetech.com)
 			Licensed under Creative Commons: By Attribution 3.0 License
 			http://creativecommons.org/licenses/by/3.0/
+		</div>
 	</div>
 </body>
 </html>

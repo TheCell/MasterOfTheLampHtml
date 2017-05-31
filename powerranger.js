@@ -5,7 +5,6 @@ window.left = false;
 window.right = false;
 window.start = false;
 window.playMusic = true;
-window.playSound = true;
 window.audioObject;
 window.lastImgFrame = 1;
 window.lastCollectiblePosTop = 350;
@@ -144,8 +143,8 @@ function startGame()
 {
 	if(!window.start)
 	{
-		collectibleLifetime();
 		window.start = true;
+		collectibleLifetime();
 		window.audioObject = new Audio('sfx/Wepa.mp3');
 		window.audioObject.volume = 0.1;
 		window.audioObject.loop = true;
@@ -178,112 +177,115 @@ function collectibleLifetime()
 	}
 	changeSpawnPos();
 
-	var collectibleImgElement = document.createElement("img");
-	//collectibleImgElement.src = "gfx/bronze_1.png";
-	collectibleImgElement.src = "gfx/glazing_" + window.lastImgFrame + ".png";
-	collectibleImgElement.style.top = xPos + "px";
-	collectibleImgElement.style.left = yPos + "px";
-	collectibleImgElement.style.zIndex = 0;
-	collectibleImgElement.className += "collectible";
-	collectibleImgElement.zAxe = 1;
-	collectibleImgElement.canDie = false;
-	document.getElementById("collectibleContainer").appendChild(collectibleImgElement);
-	window.collectibleArr.push(collectibleImgElement);
-
-	//console.log("drawn");
-	setTimeout(function () {collectibleImgElement.className = "collectibleEnd";}, 50);
-	setTimeout(function ()
+	if(window.start)
 	{
-		collectibleImgElement.zAxe = collectibleImgElement.zAxe + 2;
-		collectibleImgElement.style.zIndex = parseInt(collectibleImgElement.style.zIndex) + 1;
-	}, 1000);
-	setTimeout(function ()
-	{
-		collectibleImgElement.zAxe = collectibleImgElement.zAxe + 2;
-		collectibleImgElement.style.zIndex = parseInt(collectibleImgElement.style.zIndex) + 1;
-	}, 2000);
-	setTimeout(function ()
-	{
-		collectibleImgElement.zAxe = collectibleImgElement.zAxe + 2;
-		collectibleImgElement.style.zIndex = parseInt(collectibleImgElement.style.zIndex) + 1;
-	}, 3000);
-	setTimeout(function ()
-	{
-		collectibleImgElement.zAxe = collectibleImgElement.zAxe + 2;
-		collectibleImgElement.style.zIndex = parseInt(collectibleImgElement.style.zIndex) + 1;
-	}, 4000);
+		var collectibleImgElement = document.createElement("img");
+		//collectibleImgElement.src = "gfx/bronze_1.png";
+		collectibleImgElement.src = "gfx/glazing_" + window.lastImgFrame + ".png";
+		collectibleImgElement.style.top = xPos + "px";
+		collectibleImgElement.style.left = yPos + "px";
+		collectibleImgElement.style.zIndex = 0;
+		collectibleImgElement.className += "collectible";
+		collectibleImgElement.zAxe = 1;
+		collectibleImgElement.canDie = false;
+		document.getElementById("collectibleContainer").appendChild(collectibleImgElement);
+		window.collectibleArr.push(collectibleImgElement);
 
-	setTimeout(function ()
-	{
-		//console.log(collectibleImgElement.offsetWidth);
-		window.collectibleArr.pop(collectibleImgElement);
-
-		/*
-		console.log("left: " + parseInt(collectibleImgElement.style.left));
-		console.log("top: " + parseInt(collectibleImgElement.style.top));
-		console.log("width: " + collectibleImgElement.width * 2);
-		console.log("height: " + collectibleImgElement.height * 2);
-		*/
-
-		let halfCollWidth = collectibleImgElement.width / 2;
-		let halfCollHeight = collectibleImgElement.height / 2;
-		let collLeft = parseInt(collectibleImgElement.style.left);
-		let collTop = parseInt(collectibleImgElement.style.top);
-
-		let charHeight = 50;
-		let charWidth = 73;
-		let charLeft = 300;
-		let charTop = 300;
-
-		let charMidX = charLeft + (charWidth / 2);
-		let charMidY = charTop + (charHeight / 2);
-		let collMidY = collTop + halfCollHeight;
-		let collMidX = collLeft + halfCollWidth;
-
-		//let xBetween = (Math.max(collMidX, charMidX) - Math.min(collMidX, charMidX));
-		//let yBetween = (Math.max(collMidY, charMidY) - Math.min(collMidY, charMidY));
-		let xBetween = Math.abs(collMidX - charMidX);
-		let yBetween = Math.abs(collMidY - charMidY);
-
-		//console.log(Math.sqrt(xBetween * xBetween + yBetween * yBetween));
-
-		// debug
-		if(false)
+		//console.log("drawn");
+		setTimeout(function () {collectibleImgElement.className = "collectibleEnd";}, 50);
+		setTimeout(function ()
 		{
-			var marker = document.createElement("img");
-			marker.src = "gfx/glazing_" + window.lastImgFrame + ".png";
-			marker.style.top = collMidY + "px";
-			marker.style.left = collMidX + "px";
-			marker.className = "marker";
-			document.getElementById("collectibleContainer").appendChild(marker);
-		}
-
-		//if(Math.sqrt(xBetween * xBetween + yBetween * yBetween) <= 500)
-		//if(Math.sqrt(xBetween * xBetween + yBetween * yBetween) <= 160)
-		if(Math.sqrt(xBetween * xBetween + yBetween * yBetween) <= 180)
+			collectibleImgElement.zAxe = collectibleImgElement.zAxe + 2;
+			collectibleImgElement.style.zIndex = parseInt(collectibleImgElement.style.zIndex) + 1;
+		}, 1000);
+		setTimeout(function ()
 		{
-			window.score = window.score + 1;
-			//console.log("SCORE");
-			if(window.playMusics)
+			collectibleImgElement.zAxe = collectibleImgElement.zAxe + 2;
+			collectibleImgElement.style.zIndex = parseInt(collectibleImgElement.style.zIndex) + 1;
+		}, 2000);
+		setTimeout(function ()
+		{
+			collectibleImgElement.zAxe = collectibleImgElement.zAxe + 2;
+			collectibleImgElement.style.zIndex = parseInt(collectibleImgElement.style.zIndex) + 1;
+		}, 3000);
+		setTimeout(function ()
+		{
+			collectibleImgElement.zAxe = collectibleImgElement.zAxe + 2;
+			collectibleImgElement.style.zIndex = parseInt(collectibleImgElement.style.zIndex) + 1;
+		}, 4000);
+
+		setTimeout(function ()
+		{
+			//console.log(collectibleImgElement.offsetWidth);
+			window.collectibleArr.pop(collectibleImgElement);
+
+			/*
+			console.log("left: " + parseInt(collectibleImgElement.style.left));
+			console.log("top: " + parseInt(collectibleImgElement.style.top));
+			console.log("width: " + collectibleImgElement.width * 2);
+			console.log("height: " + collectibleImgElement.height * 2);
+			*/
+
+			let halfCollWidth = collectibleImgElement.width / 2;
+			let halfCollHeight = collectibleImgElement.height / 2;
+			let collLeft = parseInt(collectibleImgElement.style.left);
+			let collTop = parseInt(collectibleImgElement.style.top);
+
+			let charHeight = 50;
+			let charWidth = 73;
+			let charLeft = 300;
+			let charTop = 300;
+
+			let charMidX = charLeft + (charWidth / 2);
+			let charMidY = charTop + (charHeight / 2);
+			let collMidY = collTop + halfCollHeight;
+			let collMidX = collLeft + halfCollWidth;
+
+			//let xBetween = (Math.max(collMidX, charMidX) - Math.min(collMidX, charMidX));
+			//let yBetween = (Math.max(collMidY, charMidY) - Math.min(collMidY, charMidY));
+			let xBetween = Math.abs(collMidX - charMidX);
+			let yBetween = Math.abs(collMidY - charMidY);
+
+			//console.log(Math.sqrt(xBetween * xBetween + yBetween * yBetween));
+
+			// debug
+			if(false)
 			{
-				var audiofx = new Audio("sfx/194081__potentjello__woosh-noise-1.wav");
-				audiofx.volume = 1;
-				audiofx.play();
+				var marker = document.createElement("img");
+				marker.src = "gfx/glazing_" + window.lastImgFrame + ".png";
+				marker.style.top = collMidY + "px";
+				marker.style.left = collMidX + "px";
+				marker.className = "marker";
+				document.getElementById("collectibleContainer").appendChild(marker);
 			}
-		}
-		else
-		{
 
-		}
+			//if(Math.sqrt(xBetween * xBetween + yBetween * yBetween) <= 500)
+			//if(Math.sqrt(xBetween * xBetween + yBetween * yBetween) <= 160)
+			if(Math.sqrt(xBetween * xBetween + yBetween * yBetween) <= 180)
+			{
+				window.score = window.score + 1;
+				//console.log("SCORE");
+				if(window.playMusics)
+				{
+					var audiofx = new Audio("sfx/194081__potentjello__woosh-noise-1.wav");
+					audiofx.volume = 1;
+					audiofx.play();
+				}
+			}
+			else
+			{
+				lostGame();
+			}
 
+			//collectibleImgElement.remove();
+			//collectibleImgElement.canDie = true;
+			window.collectibleArrForDel.push(collectibleImgElement);
+		}, 4200);
+
+		setTimeout(collectibleLifetime, 1000);
+		setTimeout(killcollectible, 1000);
 		//collectibleImgElement.remove();
-		//collectibleImgElement.canDie = true;
-		window.collectibleArrForDel.push(collectibleImgElement);
-	}, 4200);
-
-	setTimeout(collectibleLifetime, 1000);
-	setTimeout(killcollectible, 1000);
-	//collectibleImgElement.remove();
+	}
 }
 
 function changeSpawnPos()
@@ -375,4 +377,27 @@ function gameloop()
 	}
 }
 
-setInterval(gameloop, 30);
+window.gameinterval = setInterval(gameloop, 30);
+
+function lostGame()
+{
+	window.start = false;
+	killcollectible();
+	for (var i = window.collectibleArr.length - 1; i >= 0; i--)
+	{
+		window.collectibleArr[i].remove();
+	}
+	clearInterval(window.gameinterval);
+
+	var myHeaders = new Headers();
+	var myInit = {
+		method: 'GET',
+		headers: myHeaders,
+		mode: 'cors',
+		cache: 'default'
+	};
+
+	fetch('http://dev.thecell.eu/masterofthelamp/getandsetlist.php?set=1&gameid=1&score=' + window.score + '&name=' + localStorage.getItem("playerName") + '&date=' + new Date().toISOString(), myInit).then(function(response) {
+		window.location = "lost.html";
+	});
+}
