@@ -276,7 +276,6 @@ function collectibleLifetime()
 				if(window.playMusic)
 				{
 					window.audioHitObject.play();
-					console.log("playMusic");
 				}
 			}
 			else

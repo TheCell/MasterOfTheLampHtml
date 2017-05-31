@@ -6,7 +6,7 @@
 	</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
-<body>
+<body class="indexBackground">
 	<script type="text/javascript">
 		function startgame()
 		{
@@ -21,16 +21,19 @@
 
 	<div>
 		<form name="nameForm" onsubmit="return startgame()">
-			<input type="text" name="name" maxlength="3" style="text-transform:uppercase" />
+			<input type="text" name="name" maxlength="3" style="text-transform:uppercase" autofocus />
 
 			<input type="submit" name="start">
 		</form>
 
 		<div class="credits">
-			Credits:<br>
+			<h2>Credits:</h2>
 			Music: "Wepa" Kevin MacLeod (incompetech.com)
-			Licensed under Creative Commons: By Attribution 3.0 License
-			http://creativecommons.org/licenses/by/3.0/
+			<br>
+			<a href="http://creativecommons.org/licenses/by/3.0/">Licensed under Creative Commons: By Attribution 3.0 License</a>
+			<br>
+			<br>
+			Assets and Soundeffects: Kenney.nl
 		</div>
 	</div>
 </body>

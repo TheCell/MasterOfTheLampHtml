@@ -76,8 +76,48 @@ body
 	margin-top: 100px;
 }
 
+.gameBackground
+{
+	background-image: url(gfx/bg_layer2.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+}
+
+.indexBackground
+{
+	background-image: url(gfx/bg_layer3.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+}
+
 /* lost.html */
 .medaille
 {
 	max-height: 40px;
 }
+
+.scoretable
+{
+	width: 300px;
+	margin: auto;
+    border: 10px solid transparent;
+    border-image: url(gfx/scoreborder.png) 30 round;
+    padding: 15px;
+    text-align: center;
+}
+
+.lostbackground
+{
+	background-image: url(gfx/bg_layer4.png);
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-attachment: fixed;
+}
+/*
+#scorelist > table > tr > td:nth-child(1)
+{
+	text-align: right;
+}
+*/
